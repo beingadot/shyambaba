@@ -314,6 +314,7 @@
   inset: -8%;
   z-index: 40;
   pointer-events: none;
+  transform: translateZ(60px);
   animation: devotional-orbit 9s linear infinite !important;
 }
 
@@ -392,7 +393,8 @@
 }
 
 @keyframes devotional-orbit {
-  to { transform: rotate(360deg); }
+  from { transform: translateZ(60px) rotate(0deg); }
+  to { transform: translateZ(60px) rotate(360deg); }
 }
 
 @keyframes devotional-level {
