@@ -1,13 +1,22 @@
 import { motion } from "framer-motion";
 import SmartImage from "./SmartImage";
 
+const LINKS = [
+  { label: "Home", href: "#home" },
+  { label: "Creative Canvas", href: "#canvas" },
+  { label: "Reels", href: "#reels" },
+  { label: "Contact", href: "#contact" },
+];
+
+/** Paste your real profile URLs here. */
+const SOCIALS = [
+  { label: "IG", href: "https://instagram.com/beingadot.in" },
+  { label: "YT", href: "https://www.youtube.com/@BEINGADOT" },
+  { label: "LI", href: "https://linkedin.com/in/your-handle" },
+  { label: "WA", href: "https://wa.me/7564024877" },
+];
+
 export default function Footer() {
-  const links = [
-    { label: "Home", href: "#partner-home" },
-    { label: "Purpose", href: "#purpose" },
-    { label: "Gallery", href: "#divine-inspiration" },
-    { label: "Contact", href: "#contact" },
-  ];
   return (
     <footer id="contact" className="relative w-full overflow-hidden bg-void pt-24 md:pt-36">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[80rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(221,255,60,0.12),transparent_65%)] blur-3xl" />
@@ -48,22 +57,25 @@ export default function Footer() {
               Designing stories, not just visuals.
             </p>
             <div className="mt-6 flex gap-2">
-              {["IG", "YT", "IN", "BE"].map((s) => (
-                <span
-                  key={s}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-white/15 font-mono text-[10px] tracking-[0.1em] text-ash transition-colors hover:border-acid hover:text-acid"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
+  {SOCIALS.map((s) => (
+    <a
+      key={s.label}
+      href={s.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="grid h-10 w-10 place-items-center rounded-full border border-white/15 font-mono text-[10px] tracking-[0.1em] text-ash transition-colors hover:border-acid hover:text-acid"
+    >
+      {s.label}
+    </a>
+  ))}
+</div>
           </div>
 
           {/* links */}
           <div className="col-span-12 sm:col-span-6 md:col-span-4">
             <h3 className="font-mono text-[10px] tracking-[0.3em] text-ash uppercase">Quick Links</h3>
             <ul className="mt-5 space-y-2">
-              {links.map((l) => (
+              {LINKS.map((l) => (
                 <li key={l.label}>
                   <a
                     href={l.href}
@@ -82,9 +94,7 @@ export default function Footer() {
             <h3 className="font-mono text-[10px] tracking-[0.3em] text-ash uppercase">Let's Connect</h3>
             <div className="mt-5 space-y-4 text-sm">
               <p className="text-ash">
-                Vadodara, Gujarat
-                <br />
-                India
+                Gujarat, India
               </p>
               <p>
                 <a
@@ -93,7 +103,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 border-b border-acid/40 pb-1 text-bone transition-colors hover:text-acid"
                 >
-                  WhatsApp Me
+                  📞 WhatsApp Me
                 </a>
               </p>
               <p>
@@ -101,7 +111,7 @@ export default function Footer() {
                   href="mailto:beingadot@gmail.com"
                   className="inline-flex items-center gap-2 border-b border-white/20 pb-1 text-bone transition-colors hover:text-acid"
                 >
-                  beingadot@gmail.com
+                  📧 beingadot@gmail.com
                 </a>
               </p>
             </div>
