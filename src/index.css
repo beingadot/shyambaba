@@ -1,0 +1,441 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 26rem;
+
+  --font-display: "Anton", "Archivo", sans-serif;
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-void: #06060a;
+  --color-coal: #0d0d12;
+  --color-slate2: #16161d;
+  --color-bone: #f0ede5;
+  --color-ash: #8b8b96;
+  --color-acid: #ddff3c;
+  --color-flame: #ff4a1c;
+  --color-ice: #7bdcff;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-void);
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  img,
+  video,
+  svg {
+    max-width: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-void);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-acid);
+    color: #000;
+  }
+
+  section[id],
+  footer[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0b0b10;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26262f;
+    border-radius: 9px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-acid);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    body,
+    a,
+    button,
+    .tilt-card,
+    [data-cursor] {
+      cursor: none;
+    }
+  }
+}
+
+@utility stroke-text {
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(240, 237, 229, 0.65);
+}
+
+@utility stroke-text-thin {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(240, 237, 229, 0.28);
+}
+
+/* ---------- grain + texture ---------- */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -200%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='220' height='220' filter='url(%23n)' opacity='0.55'/></svg>");
+  animation: grainShift 0.7s steps(3) infinite;
+  mix-blend-mode: overlay;
+}
+
+@keyframes grainShift {
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-3%, 2%);
+  }
+  66% {
+    transform: translate(2%, -3%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .stroke-text {
+    -webkit-text-stroke-width: 0.8px;
+  }
+  .stroke-text-thin {
+    -webkit-text-stroke-width: 0.7px;
+  }
+  .hairline-grid {
+    background-size: 44px 44px;
+  }
+}
+
+.hairline-grid {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.vignette {
+  background: radial-gradient(120% 90% at 50% 10%, transparent 35%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+/* ---------- marquee ---------- */
+@keyframes marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x var(--speed, 28s) linear infinite;
+}
+
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+
+.marquee-pause:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------- spinning badge ---------- */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+.spin-slower {
+  animation: spin-slow 40s linear infinite;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.floaty {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: caret 0.85s step-end infinite;
+}
+
+/* ---------- 3d helpers ---------- */
+.persp {
+  perspective: 1400px;
+}
+.persp-sm {
+  perspective: 900px;
+}
+.preserve3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ---------- phone ---------- */
+.phone-shell {
+  background: linear-gradient(150deg, #3a3a44 0%, #101014 32%, #05050a 60%, #2c2c34 100%);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.acid-glow {
+  box-shadow: 0 0 0 1px rgba(221, 255, 60, 0.35), 0 22px 70px -25px rgba(221, 255, 60, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- devotional partner page ---------- */
+.partner-page {
+  --temple-gold: #dca342;
+  --temple-cream: #f5e9cf;
+  --temple-red: #731b13;
+}
+
+.partner-motif {
+  background-image:
+    radial-gradient(circle at center, rgba(224, 166, 66, 0.16) 0 1px, transparent 1.5px),
+    linear-gradient(45deg, transparent 48.5%, rgba(224, 166, 66, 0.055) 49%, rgba(224, 166, 66, 0.055) 51%, transparent 51.5%),
+    linear-gradient(-45deg, transparent 48.5%, rgba(224, 166, 66, 0.055) 49%, rgba(224, 166, 66, 0.055) 51%, transparent 51.5%);
+  background-size: 38px 38px, 76px 76px, 76px 76px;
+}
+
+.partner-motif-dark {
+  background-image:
+    radial-gradient(circle at center, rgba(42, 12, 5, 0.36) 0 1px, transparent 1.5px),
+    linear-gradient(45deg, transparent 48.5%, rgba(42, 12, 5, 0.13) 49%, rgba(42, 12, 5, 0.13) 51%, transparent 51.5%),
+    linear-gradient(-45deg, transparent 48.5%, rgba(42, 12, 5, 0.13) 49%, rgba(42, 12, 5, 0.13) 51%, transparent 51.5%);
+  background-size: 34px 34px, 68px 68px, 68px 68px;
+}
+
+.partner-perspective {
+  perspective: 1200px;
+}
+
+.partner-garland::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 2%;
+  right: 2%;
+  height: 1px;
+  background: #d8ad55;
+  transform: rotate(7deg);
+  transform-origin: center;
+  opacity: 0.75;
+}
+
+.partner-garland span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: clamp(5px, 1.35vw, 10px);
+  height: clamp(5px, 1.35vw, 10px);
+  flex: 0 0 auto;
+  border-radius: 45% 55% 48% 52%;
+  box-shadow: 0 0 8px rgba(222, 146, 34, 0.65);
+}
+
+.partner-garland span:nth-child(2),
+.partner-garland span:nth-child(14) { transform: translateY(3px); }
+.partner-garland span:nth-child(3),
+.partner-garland span:nth-child(13) { transform: translateY(7px); }
+.partner-garland span:nth-child(4),
+.partner-garland span:nth-child(12) { transform: translateY(12px); }
+.partner-garland span:nth-child(5),
+.partner-garland span:nth-child(11) { transform: translateY(17px); }
+.partner-garland span:nth-child(6),
+.partner-garland span:nth-child(10) { transform: translateY(22px); }
+.partner-garland span:nth-child(7),
+.partner-garland span:nth-child(9) { transform: translateY(25px); }
+.partner-garland span:nth-child(8) { transform: translateY(27px); }
+
+/* A CSS-built diya continuously circles the Baba Shyam image. */
+.diya-orbit {
+  position: absolute;
+  inset: -8%;
+  z-index: 40;
+  pointer-events: none;
+  animation: devotional-orbit 9s linear infinite !important;
+}
+
+.diya-level {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  animation: devotional-level 9s linear infinite !important;
+}
+
+.diya {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 0 12px rgba(255, 128, 23, 0.7));
+}
+
+.diya-bowl {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  left: 5px;
+  height: 17px;
+  border-radius: 4px 4px 22px 22px;
+  background: linear-gradient(180deg, #f2be58 0%, #b84418 48%, #5e140d 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 236, 156, 0.45), 0 5px 18px rgba(255, 83, 20, 0.5);
+}
+
+.diya-bowl::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 22px;
+  height: 4px;
+  border-radius: 50%;
+  background: #8e2b14;
+  transform: translateX(-50%);
+}
+
+.diya-wick {
+  position: absolute;
+  z-index: 2;
+  bottom: 18px;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  border-radius: 2px;
+  background: #301006;
+  transform: translateX(-50%);
+}
+
+.diya-flame {
+  position: absolute;
+  z-index: 3;
+  bottom: 24px;
+  left: 50%;
+  width: 13px;
+  height: 22px;
+  border-radius: 58% 42% 62% 38% / 70% 45% 55% 30%;
+  background: radial-gradient(circle at 50% 72%, #fffbd1 0 16%, #ffd548 28%, #ff721b 62%, rgba(202, 28, 5, 0.3) 78%, transparent 80%);
+  box-shadow: 0 0 12px #ffb229, 0 0 26px rgba(255, 78, 20, 0.8), 0 0 48px rgba(255, 78, 20, 0.45);
+  transform: translateX(-50%) rotate(4deg);
+  transform-origin: 50% 100%;
+  animation: devotional-flame 0.85s ease-in-out infinite alternate !important;
+}
+
+.partner-pledge .gold {
+  color: #210b04;
+  text-decoration: underline;
+  text-decoration-color: rgba(33, 11, 4, 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.17em;
+}
+
+@keyframes devotional-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes devotional-level {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(-360deg); }
+}
+
+@keyframes devotional-flame {
+  0% { transform: translateX(-50%) rotate(-5deg) scale(0.92, 1.04); }
+  45% { transform: translateX(-50%) rotate(5deg) scale(1.04, 0.94); }
+  100% { transform: translateX(-50%) rotate(-2deg) scale(0.96, 1.09); }
+}
+
+@media (max-width: 640px) {
+  .partner-motif {
+    background-size: 28px 28px, 56px 56px, 56px 56px;
+  }
+
+  .diya-level,
+  .diya {
+    width: 38px;
+    height: 38px;
+  }
+
+  .diya-level {
+    top: -14px;
+  }
+
+  .diya-bowl {
+    right: 4px;
+    bottom: 2px;
+    left: 4px;
+    height: 13px;
+  }
+
+  .diya-wick {
+    bottom: 14px;
+    height: 6px;
+  }
+
+  .diya-flame {
+    bottom: 19px;
+    width: 10px;
+    height: 18px;
+  }
+}
