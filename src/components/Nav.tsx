@@ -5,8 +5,8 @@ import { cn } from "../utils/cn";
 
 export default function Nav() {
   const links = [
-    { label: "Home", href: "#partner-home", external: false },
-    { label: "About", href: "#purpose", external: false },
+    { label: "Home", href: "https://beingadot.vercel.app/", external: true },
+    { label: "About", href: "https://beingapartner.vercel.app/", external: true },
     { label: "Learn", href: "https://beingadotcourses.vercel.app/", external: true },
     { label: "Store", href: "https://beingaseller.vercel.app/", external: true },
   ];
